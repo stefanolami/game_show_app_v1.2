@@ -35,16 +35,60 @@ function addPhraseToDisplay(arr) {
     }
 }
 
-//addPhraseToDisplay(getRandomPhraseAsArray(phrases));
+addPhraseToDisplay(getRandomPhraseAsArray(phrases));
+const letters = document.querySelectorAll('.letter');
 
 function checkLetter(btn) {
-    const letters = document.querySelectorAll('.letter');
+    let letter = '';
     for (let i = 0; i < letters.length; i++) {
         if (letters[i].textContent === btn.textContent) {
             letters[i].className += ' show';
-            const letterFound 
-        } else {
-            return null
-        }
+            letter = letters[i].textContent;
+        } 
     }
+    if (letter === '') {
+        return null;
+
+    } else {
+        return letter;
+    }  
+}
+
+function checkWin() {
+    const letters = document.querySelectorAll('.letter');
+    const shownLetters = document.querySelectorAll('.show');
+    const overlay = document.querySelector('#overlay');
+    if (letters.length === shownLetters.length) {
+        overlay.className = 'win';
+        overlay.style.display = 'flex';
+    } else if (missed >= 5) {
+        overlay.className = 'lose';
+        overlay.style.display = 'flex';
+    }
+}
+
+
+qwerty.addEventListener('click', (e) => {
+    const btn = e.target
+    if (btn.tagName === 'BUTTON') {
+        btn.className += ' chosen';
+        btn.setAttribute('disabled', '');
+        const letterFound = checkLetter(btn);
+        if (letterFound === null) {
+            missed ++;
+            const hearts = document.querySelectorAll('.tries');
+            const lastHeart = hearts[hearts.length - 1];
+            lastHeart.firstChild.src = 'images/lostHeart.png';
+            lastHeart.className = 'failedTry'
+        }
+        checkWin();
+    }
+})
+
+function createResetBtn() {
+    start.textContent = '';
+    const btn = document.createElement('button');
+    btn.textContent = 'Reset Game';
+    start.appendChild(btn);
+
 }
