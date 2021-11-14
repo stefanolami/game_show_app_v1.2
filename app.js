@@ -94,6 +94,7 @@ function resetKeyboard() {
     }
 }
 
+
 addPhraseToDisplay(getRandomPhraseAsArray(phrases));
 const letters = document.querySelectorAll('.letter');
 
@@ -111,8 +112,6 @@ start.addEventListener('click', (e) => {
     
 })
 
-
-
 qwerty.addEventListener('click', (e) => {
     const btn = e.target
     if (btn.tagName === 'BUTTON') {
@@ -129,4 +128,3 @@ qwerty.addEventListener('click', (e) => {
         checkWin();
     }
 })
-
