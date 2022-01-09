@@ -2,7 +2,6 @@ const qwerty = document.querySelector('#qwerty');
 const phrase = document.querySelector('#phrase');
 const start = document.querySelector('.btn__reset');
 const overlay = document.querySelector('#overlay');
-const main = document.querySelector('.main-container');
 
 let missed = 0;
 
@@ -11,47 +10,25 @@ const phrases = [
     'research is what im doing when i dont know what im doing',
     'leave the atom alone',
     'theory helps us to bear our ignorance of facts',
-    'science never solves a problem without creating ten more',
-    'two things are infinite the universe and human stupidity and i am not sure about the universe',
-    'the most important thing is to never stop questioning',
-    'there is no law except the law that there is no law',
-    'something incredible is waiting to be known',
-    'falsity in intellectual action is intellectual immorality',
-    'science without religion is lame and religion without science is blind',
-    'the good thing about science is that it’s true whether or not you believe in it',
-    'i have seen the further it is by standing on the shoulders of giants',
-    'real science can be far stranger than science fiction and much more satisfying',
-    'science is simply the word to describe a method of organizing our curiosity',
-    'energy is liberated matter and matter is energy waiting to happen'
+    'science never solves a problem without creating ten more'
 ];
 
 function getRandomPhraseAsArray(arr) {
-    const i = Math.floor(Math.random() * 16);
-    const newPhraseArray = arr[i].split(' ');
-    
-    console.log(newPhraseArray);
+    const i = Math.floor(Math.random() * 5);
+    const newPhraseArray = arr[i].split('');
     return newPhraseArray;
  }
 
  function addPhraseToDisplay(arr) {
     for (let i = 0; i < arr.length; i++) {
-        const div = document.createElement('div')
-        div.className = 'wordDiv';
-        const ul = document.createElement('ul');
-        div.append(ul);
-        phrase.append(div);
-        const wordArray = arr[i].split('');
-
-        for (let i = 0; i < wordArray.length; i++) {
-            const li = document.createElement('li');
-            li.textContent = wordArray[i];
-            if (wordArray[i] === ' ') {
-                li.className = 'space';
-            } else {
-                li.className = 'letter';
-            }
-            ul.append(li);
+        const li = document.createElement('li');
+        li.textContent = arr[i];
+        if (arr[i] === ' ') {
+            li.className = 'space';
+        } else {
+            li.className = 'letter';
         }
+        phrase.append(li);
     }
 }
 
@@ -85,22 +62,17 @@ function checkWin() {
     } else if (missed >= 5) {
         overlay.className = 'lose';
         overlay.style.display = 'flex';
-        title.textContent = "You're a Loser";
+        title.textContent = "you're a loser";
         createResetBtn();
     }
 }
 
 function createResetBtn() {
-    const btn = document.querySelector('.resetBtn')
     start.remove();
-    if (btn) {
-        btn.remove();
-    }
-    
-    const newBtn = document.createElement('button');
-    newBtn.textContent = 'RESET GAME';
-    newBtn.className = 'resetBtn'
-    overlay.appendChild(newBtn);
+    const btn = document.createElement('button');
+    btn.textContent = 'RESET GAME';
+    btn.className = 'resetBtn'
+    overlay.appendChild(btn);
 }
 
 function resetHearts() {
@@ -131,12 +103,9 @@ addPhraseToDisplay(getRandomPhraseAsArray(phrases));
 const letters = document.querySelectorAll('.letter');
 
 
-start.addEventListener('click', (e) => {
-    const overlay = document.querySelector('#overlay');
-    overlay.style.display = 'none';
-})
-
 overlay.addEventListener('click', (e) => {
+    
+    
     if (e.target.className === 'resetBtn') {
         overlay.style.display = 'none';
         missed = 0;
@@ -144,6 +113,7 @@ overlay.addEventListener('click', (e) => {
         resetPhrase();
         resetKeyboard();
     }
+    
 })
 
 qwerty.addEventListener('click', (e) => {
@@ -163,3 +133,4 @@ qwerty.addEventListener('click', (e) => {
     }
 })
 
+console.log(title.textContent);
